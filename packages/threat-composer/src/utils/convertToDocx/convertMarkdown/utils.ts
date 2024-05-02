@@ -13,15 +13,13 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
-const downloadObjectAsJson = (exportObj: any, exportName: string) => {
-  var dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportObj, null, 2));
-  var downloadAnchorNode = document.createElement('a');
-  downloadAnchorNode.setAttribute('href', dataStr);
-  downloadAnchorNode.setAttribute('download', exportName + '.tc.json');
-  document.body.appendChild(downloadAnchorNode);
-  downloadAnchorNode.click();
-  downloadAnchorNode.remove();
+export const unreachable = (_: never): never => {
+  throw new Error('unreachable');
 };
 
-
-export default downloadObjectAsJson;
+/**
+ * @internal
+ */
+export function invariant(cond: any, message: string): asserts cond {
+  if (!cond) throw new Error(message);
+}

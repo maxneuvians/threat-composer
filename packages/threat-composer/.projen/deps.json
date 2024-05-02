@@ -57,6 +57,10 @@
       "type": "build"
     },
     {
+      "name": "@types/json-to-pretty-yaml",
+      "type": "build"
+    },
+    {
       "name": "@types/lodash.isequal",
       "type": "build"
     },
@@ -216,7 +220,15 @@
       "type": "runtime"
     },
     {
+      "name": "docx",
+      "type": "runtime"
+    },
+    {
       "name": "indefinite",
+      "type": "runtime"
+    },
+    {
+      "name": "json-to-pretty-yaml",
       "type": "runtime"
     },
     {
@@ -261,6 +273,10 @@
     },
     {
       "name": "unified",
+      "type": "runtime"
+    },
+    {
+      "name": "unist-util-visit",
       "type": "runtime"
     },
     {

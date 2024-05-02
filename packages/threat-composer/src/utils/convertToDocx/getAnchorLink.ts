@@ -13,14 +13,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
-const downloadContentAsMarkdown = (content: any, exportName: string) => {
-  var dataStr = 'data:text/markdown;charset=utf-8,' + encodeURIComponent(content);
-  var downloadAnchorNode = document.createElement('a');
-  downloadAnchorNode.setAttribute('href', dataStr);
-  downloadAnchorNode.setAttribute('download', exportName + '.md');
-  document.body.appendChild(downloadAnchorNode);
-  downloadAnchorNode.click();
-  downloadAnchorNode.remove();
+import { InternalHyperlink, TextRun } from 'docx';
+
+const getAnchorLink = (text: string, anchor: string = text) => {
+  return new InternalHyperlink({
+    children: [
+      new TextRun({
+        text: text,
+        style: 'Hyperlink',
+      }),
+    ],
+    anchor: anchor,
+  });
 };
 
-export default downloadContentAsMarkdown;
+export default getAnchorLink;
