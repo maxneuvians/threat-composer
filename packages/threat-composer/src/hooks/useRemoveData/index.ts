@@ -20,6 +20,7 @@ import { useArchitectureInfoContext } from '../../contexts/ArchitectureContext';
 import { useAssumptionLinksContext } from '../../contexts/AssumptionLinksContext';
 import { useAssumptionsContext } from '../../contexts/AssumptionsContext';
 import { useDataflowInfoContext } from '../../contexts/DataflowContext';
+import { useDiagramContext } from '../../contexts/DiagramContext';
 import { useGlobalSetupContext } from '../../contexts/GlobalSetupContext';
 import { useMitigationLinksContext } from '../../contexts/MitigationLinksContext';
 import { useMitigationsContext } from '../../contexts/MitigationsContext';
@@ -31,6 +32,7 @@ const useRemoveData = () => {
   const { removeApplicationInfo, onDeleteWorkspace: applicationInfoDeleteWorkspace } = useApplicationInfoContext();
   const { removeArchitectureInfo, onDeleteWorkspace: architectureInfoDeleteWorkspace } = useArchitectureInfoContext();
   const { removeDataflowInfo, onDeleteWorkspace: dataflowInfoDeleteWorkspace } = useDataflowInfoContext();
+  const { removeDiagram, onDeleteWorkspace: diagramDeleteWorkspace } = useDiagramContext();
   const { removeAllAssumptions, onDeleteWorkspace: assumptionsDeleteWorkspace } = useAssumptionsContext();
   const { removeAllMitigations, onDeleteWorkspace: mitigationsDeleteWorkspace } = useMitigationsContext();
   const { removeAllStatements, onDeleteWorkspace: threatsDeleteWorkspace } = useThreatsContext();
@@ -43,6 +45,7 @@ const useRemoveData = () => {
         removeApplicationInfo(),
         removeArchitectureInfo(),
         removeDataflowInfo(),
+        removeDiagram(),
         removeAllAssumptions(),
         removeAllMitigations(),
         removeAllStatements(),
@@ -54,7 +57,7 @@ const useRemoveData = () => {
     return removeAllStatements();
   }, [composerMode,
     removeApplicationInfo, removeArchitectureInfo, removeDataflowInfo,
-    removeAllAssumptions, removeAllMitigations,
+    removeDiagram, removeAllAssumptions, removeAllMitigations,
     removeAllStatements, removeAllAssumptionLinks,
     removeAllMitigationLinks]);
 
@@ -66,6 +69,7 @@ const useRemoveData = () => {
         architectureInfoDeleteWorkspace(toDeleteWorkspaceId),
         threatsDeleteWorkspace(toDeleteWorkspaceId),
         dataflowInfoDeleteWorkspace(toDeleteWorkspaceId),
+        diagramDeleteWorkspace(toDeleteWorkspaceId),
         assumptionsDeleteWorkspace(toDeleteWorkspaceId),
         mitigationsDeleteWorkspace(toDeleteWorkspaceId),
         assumptionLinksDeleteWorkspace(toDeleteWorkspaceId),
@@ -80,6 +84,7 @@ const useRemoveData = () => {
     applicationInfoDeleteWorkspace,
     architectureInfoDeleteWorkspace,
     dataflowInfoDeleteWorkspace,
+    diagramDeleteWorkspace,
     threatsDeleteWorkspace,
     assumptionsDeleteWorkspace,
     mitigationsDeleteWorkspace,

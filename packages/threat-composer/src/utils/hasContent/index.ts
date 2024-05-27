@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
-import { ApplicationInfo, ArchitectureInfo, Assumption, DataflowInfo, Mitigation, TemplateThreatStatement } from '../../customTypes';
+import { ApplicationInfo, ArchitectureInfo, Assumption, DataflowInfo, Diagram, Mitigation, TemplateThreatStatement } from '../../customTypes';
 
 export const hasApplicationName = (applicationInfo: ApplicationInfo) => {
   return !!(applicationInfo.name);
@@ -41,5 +41,9 @@ export const hasThreats = (threatStatementList: TemplateThreatStatement[]) => {
 
 export const hasMitigations = (mitigations: Mitigation[]) => {
   return mitigations.length > 0;
+};
+
+export const hasDiagram = (diagram: Diagram) => {
+  return !!(diagram.content);
 };
 

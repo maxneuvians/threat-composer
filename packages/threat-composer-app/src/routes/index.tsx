@@ -20,6 +20,7 @@ import {
   ROUTE_ARCHITECTURE_INFO,
   ROUTE_ASSUMPTION_LIST,
   ROUTE_DATAFLOW_INFO,
+  ROUTE_DIAGRAM_INFO,
   ROUTE_MITIGATION_LIST,
   ROUTE_THREAT_EDITOR,
   ROUTE_THREAT_LIST,
@@ -33,6 +34,7 @@ import Application from '../containers/Application';
 import Architecture from '../containers/Architecture';
 import AssumptionList from '../containers/AssumptionList';
 import Dataflow from '../containers/Dataflow';
+import Diagram from '../containers/Diagram';
 import MitigationList from '../containers/MitigationList';
 import MitigationPack from '../containers/MitigationPack';
 import MitigationPacks from '../containers/MitigationPacks';
@@ -69,6 +71,10 @@ const routes: RouteProps[] = [
   {
     path: getRouteWithBasePath(ROUTE_DATAFLOW_INFO),
     element: <Dataflow />,
+  },
+  {
+    path: getRouteWithBasePath(ROUTE_DIAGRAM_INFO),
+    element: <Diagram />,
   },
   {
     path: getRouteWithBasePath(ROUTE_MITIGATION_LIST),

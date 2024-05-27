@@ -21,6 +21,7 @@ import ArchitectureInfoContextProvider from '../ArchitectureContext';
 import AssumptionLinksContextProvider from '../AssumptionLinksContext';
 import AssumptionsContextProvider from '../AssumptionsContext';
 import DataflowInfoContextProvider from '../DataflowContext';
+import DiagramContextProvider from '../DiagramContext';
 import GlobalSetupContextProvider from '../GlobalSetupContext';
 import MitigationLinksContextProvider from '../MitigationLinksContext';
 import MitigationPacksContextProvider from '../MitigationPacksContext';
@@ -56,13 +57,15 @@ const WorkspaceContextInnerAggregator: FC<PropsWithChildren<WorkspaceContextAggr
               <ApplicationInfoContextProvider workspaceId={workspaceId}>
                 <ArchitectureInfoContextProvider workspaceId={workspaceId}>
                   <DataflowInfoContextProvider workspaceId={workspaceId}>
-                    <ThreatPacksContextProvider workspaceId={workspaceId}>
-                      <MitigationPacksContextProvider workspaceId={workspaceId}>
-                        <WindowExporter>
-                          {children}
-                        </WindowExporter>
-                      </MitigationPacksContextProvider>
-                    </ThreatPacksContextProvider>
+                    <DiagramContextProvider workspaceId={workspaceId}>
+                      <ThreatPacksContextProvider workspaceId={workspaceId}>
+                        <MitigationPacksContextProvider workspaceId={workspaceId}>
+                          <WindowExporter>
+                            {children}
+                          </WindowExporter>
+                        </MitigationPacksContextProvider>
+                      </ThreatPacksContextProvider>
+                    </DiagramContextProvider>
                   </DataflowInfoContextProvider>
                 </ArchitectureInfoContextProvider>
               </ApplicationInfoContextProvider>

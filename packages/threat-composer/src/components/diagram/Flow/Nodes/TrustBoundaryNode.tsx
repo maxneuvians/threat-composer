@@ -13,20 +13,30 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
-export * from './assumptions';
-export * from './mitigations';
-export * from './threats';
-export * from './threatFieldTypes';
-export * from './workspaces';
-export * from './entities';
-export * from './composerMode';
-export * from './application';
-export * from './architecture';
-export * from './dataflow';
-export * from './dataExchange';
-export * from './events';
-export * from './components';
-export * from './referencePacks';
-export * from './windowAPI';
-export * from './appMode';
-export * from './diagram';
+import styled from '@emotion/styled';
+import { memo } from 'react';
+import { NodeResizer } from 'reactflow';
+
+
+type StyleProps = {
+  selected: boolean;
+};
+
+const TrustBoundaryStyle = styled.div`
+  border: 2px dashed ${(props: StyleProps) => (props.selected ? '#56bdf9' : '#f00')};
+  background-color: ${(props: StyleProps) => (props.selected ? '#dbf1fe' : '#fff')};
+  width: 99%;
+  height: 99%;
+  padding-left: 5px;
+`;
+
+const ResizableNodeSelected = ({ id, data, selected }: { id: string; data: any; selected: boolean } ) => {
+  return (
+    <>
+      <NodeResizer color="#ff0071" isVisible={selected} minWidth={100} minHeight={100} nodeId={id} />
+      <TrustBoundaryStyle selected={selected}>{data.name}</TrustBoundaryStyle>
+    </>
+  );
+};
+
+export default memo(ResizableNodeSelected);

@@ -23,6 +23,8 @@ export { default as AssumptionsContext } from './AssumptionsContext';
 export { useAssumptionsContext } from './AssumptionsContext/context';
 export { default as DataflowInfoContext } from './DataflowContext';
 export { useDataflowInfoContext } from './DataflowContext/context';
+export { default as DiagramContext } from './DiagramContext';
+export { useDiagramContext } from './DiagramContext/context';
 export { default as GlobalSetupContext } from './GlobalSetupContext';
 export { useGlobalSetupContext } from './GlobalSetupContext/context';
 export { default as MitigationLinksContext } from './MitigationLinksContext';

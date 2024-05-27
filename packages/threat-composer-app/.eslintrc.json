@@ -7,8 +7,8 @@
   "root": true,
   "plugins": [
     "@typescript-eslint",
-    "import",
-    "header"
+    "import"
+    // "header"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -216,11 +216,11 @@
           "method"
         ]
       }
-    ],
-    "header/header": [
-      2,
-      "../../header.js"
     ]
+    // "header/header": [
+    //  2,
+    //  "../../header.js"
+    // ]
   },
   "overrides": []
 }

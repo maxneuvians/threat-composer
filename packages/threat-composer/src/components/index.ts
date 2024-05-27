@@ -18,6 +18,7 @@ export { default as ThreatStatementList } from './threats/ThreatStatementList';
 export { default as ApplicationInfoComponent } from './application/ApplicationInfo';
 export { default as ArchitectureInfoComponent } from './architecture/ArchitectureInfo';
 export { default as DataflowInfoComponent } from './dataflow/DataflowInfo';
+export { default as DiagramComponent } from './diagram';
 export { default as AssumptionList } from './assumptions/AssumptionList';
 export { default as MitigationList } from './mitigations/MitigationList';
 export { default as WorkspaceSelector } from './workspaces/WorkspaceSelector';

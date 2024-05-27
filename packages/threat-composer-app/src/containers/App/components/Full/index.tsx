@@ -31,6 +31,7 @@ import {
   ROUTE_ARCHITECTURE_INFO,
   ROUTE_ASSUMPTION_LIST,
   ROUTE_DATAFLOW_INFO,
+  ROUTE_DIAGRAM_INFO,
   ROUTE_THREAT_PACKS,
   ROUTE_MITIGATION_LIST,
   ROUTE_THREAT_EDITOR,
@@ -142,6 +143,11 @@ const Full: FC = () => {
       {
         text: 'Dataflow',
         href: generateUrl(ROUTE_DATAFLOW_INFO, searchParms, workspaceId),
+        type: 'link',
+      },
+      {
+        text: 'Diagram',
+        href: generateUrl(ROUTE_DIAGRAM_INFO, searchParms, workspaceId),
         type: 'link',
       },
       {

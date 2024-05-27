@@ -30,6 +30,8 @@ export const LOCAL_STORAGE_KEY_MITIGATION_LINK_LIST = 'ThreatStatementGenerator.
 export const LOCAL_STORAGE_KEY_APPLICATION_INFO = 'ThreatStatementGenerator.ApplicationInfo';
 export const LOCAL_STORAGE_KEY_ARCHIECTURE_INFO = 'ThreatStatementGenerator.ArchitectureInfo';
 export const LOCAL_STORAGE_KEY_DATAFLOW_INFO = 'ThreatStatementGenerator.DataflowInfo';
+export const LOCAL_STORAGE_KEY_DIAGRAM_INFO = 'ThreatStatementGenerator.DiagramInfo';
+
 
 export const LOCAL_STORAGE_KEY_WORKSPACE_LIST_MIGRATION = 'ThreatStatementGenerator.workspaceListMigration';
 export const LOCAL_STORAGE_KEY_THREATS_LIST_MIGRATION = 'ThreatStatementGenerator.threatListMigration';
