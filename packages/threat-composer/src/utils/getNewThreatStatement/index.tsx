@@ -13,14 +13,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
-  import { v4 as uuidV4 } from 'uuid';
-  import { TemplateThreatStatement } from '../../customTypes';
-  
-  const getNewThreatStatement = (): TemplateThreatStatement => {
-    return {
-      id: uuidV4(),
-      numericId: -1,
-    };
+import { v4 as uuidV4 } from 'uuid';
+import { TemplateThreatStatement } from '../../customTypes';
+
+const getNewThreatStatement = (): TemplateThreatStatement => {
+  return {
+    id: uuidV4(),
+    numericId: -1,
   };
-  
-  export default getNewThreatStatement;
+};
+
+export default getNewThreatStatement;

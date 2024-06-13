@@ -21,7 +21,7 @@ import {
   useThreatPacksContext,
   DEFAULT_NEW_ENTITY_ID,
   ThreatPack,
-  getNewThreatStatement
+  getNewThreatStatement,
 } from '@aws/threat-composer';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
