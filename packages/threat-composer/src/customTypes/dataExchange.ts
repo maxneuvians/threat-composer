@@ -18,6 +18,7 @@ import { ApplicationInfoSchema } from './application';
 import { ArchitectureInfoSchema } from './architecture';
 import { AssumptionSchema, AssumptionLinkSchema } from './assumptions';
 import { DataflowInfoSchema } from './dataflow';
+import { DiagramSchema } from './diagram';
 import { MitigationSchema, MitigationLinkSchema } from './mitigations';
 import { TemplateThreatStatementSchema } from './threats';
 import { WorkspaceSchema, Workspace } from './workspaces';
@@ -29,6 +30,7 @@ export const DataExchangeFormatSchema = z.object({
   applicationInfo: ApplicationInfoSchema.optional(),
   architecture: ArchitectureInfoSchema.optional(),
   dataflow: DataflowInfoSchema.optional(),
+  diagram: DiagramSchema.optional(),
   assumptions: AssumptionSchema.array().optional(),
   mitigations: MitigationSchema.array().optional(),
   assumptionLinks: AssumptionLinkSchema.array().optional(),
@@ -65,6 +67,7 @@ export interface ThreatComposerNamespace {
   getWorkspaceList?: () => Workspace[];
   getCurrentWorkspaceMetadata?: () => Workspace | null;
   getCurrentWorkspaceData?: () => DataExchangeFormat;
+  getCurrentWorkspaceDataMarkdown?: () => Promise<string>;
   stringifyWorkspaceData: (arg0: any) => string;
   setCurrentWorkspaceData?: (arg0: DataExchangeFormat) => Promise<void>;
   switchWorkspace?: (id: string | null) => void;

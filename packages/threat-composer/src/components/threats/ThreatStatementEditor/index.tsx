@@ -14,23 +14,24 @@
   limitations under the License.
  ******************************************************************************************************************** */
 /** @jsxImportSource @emotion/react */
+import ContentLayoutComponent from '@cloudscape-design/components/content-layout';
 import Grid from '@cloudscape-design/components/grid';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import TextContent from '@cloudscape-design/components/text-content';
 import * as awsui from '@cloudscape-design/design-tokens';
 import { css } from '@emotion/react';
-import React, { FC, useCallback, useMemo, useState, useRef, useEffect, ReactNode } from 'react';
+import React, { FC, useCallback, useMemo, useState, useRef, useEffect, ReactNode, PropsWithChildren } from 'react';
 import { v4 as uuidV4 } from 'uuid';
 import { EditorProps } from './types';
 import { DEFAULT_NEW_ENTITY_ID, DEFAULT_WORKSPACE_LABEL } from '../../../configs/constants';
 import { useAssumptionLinksContext } from '../../../contexts/AssumptionLinksContext/context';
 import { useAssumptionsContext } from '../../../contexts/AssumptionsContext/context';
-import { useGlobalSetupContext } from '../../../contexts/GlobalSetupContext/context';
+import { GlobalSetupContextApi, useGlobalSetupContext } from '../../../contexts/GlobalSetupContext/context';
 import { useMitigationLinksContext } from '../../../contexts/MitigationLinksContext/context';
 import { useMitigationsContext } from '../../../contexts/MitigationsContext/context';
 import { useThreatsContext } from '../../../contexts/ThreatsContext/context';
 import { useWorkspacesContext } from '../../../contexts/WorkspacesContext/context';
-import { TemplateThreatStatement } from '../../../customTypes';
+import { TemplateThreatStatement, ViewNavigationEvent } from '../../../customTypes';
 import { ThreatFieldTypes } from '../../../customTypes/threatFieldTypes';
 import threatFieldData from '../../../data/threatFieldData';
 import threatStatementExamples from '../../../data/threatStatementExamples.json';
@@ -72,6 +73,10 @@ const styles = {
 
 const defaultThreatStatementFormat = threatStatementFormat[63];
 
+export interface ThreatStatementEditorProps {
+  onThreatListView?: ViewNavigationEvent['onThreatListView'];
+}
+
 const editorMapping: { [key in ThreatFieldTypes]: React.ComponentType<EditorProps & { ref?: React.ForwardedRef<any> }> } = {
   threat_source: EditorThreatSource,
   prerequisites: EditorPrerequisites,
@@ -81,10 +86,45 @@ const editorMapping: { [key in ThreatFieldTypes]: React.ComponentType<EditorProp
   impacted_assets: EditorImpactedAssets,
 };
 
-const ThreatStatementEditorInner: FC<{ editingStatement: TemplateThreatStatement }> = ({
+const ContentLayout: FC<PropsWithChildren<{
+  composerMode: GlobalSetupContextApi['composerMode'];
+  editingStatement: TemplateThreatStatement;
+  saveButtonText: string;
+  onCancel: () => void;
+  onStartOver: () => void;
+  onComplete: () => void;
+}>> = ({
+  children,
   editingStatement,
+  composerMode,
+  onCancel,
+  onStartOver,
+  onComplete,
+  saveButtonText,
 }) => {
-  const { setEditingStatement, saveStatement, addStatement, onThreatListView } = useThreatsContext();
+  if (composerMode !== 'Full') {
+    return (<>{children}</>);
+  }
+
+  return (<ContentLayoutComponent
+    disableOverlap
+    header={<Header
+      composerMode={composerMode}
+      statement={editingStatement}
+      saveButtonText={saveButtonText}
+      onCancel={onCancel}
+      onStartOver={onStartOver}
+      onComplete={onComplete} />
+    }>
+    {children}
+  </ContentLayoutComponent>);
+};
+
+export const ThreatStatementEditorInner: FC<ThreatStatementEditorProps & { editingStatement: TemplateThreatStatement }> = ({
+  editingStatement,
+  onThreatListView,
+}) => {
+  const { setEditingStatement, saveStatement, addStatement } = useThreatsContext();
   const inputRef = useRef<{ focus(): void }>();
   const fullExamplesRef = useRef<{ collapse(): void }>();
   const { currentWorkspace, workspaceList } = useWorkspacesContext();
@@ -306,9 +346,16 @@ const ThreatStatementEditorInner: FC<{ editingStatement: TemplateThreatStatement
   }
 
   return (
-    <>
+    <ContentLayout
+      composerMode={composerMode}
+      saveButtonText={saveButtonText}
+      editingStatement={editingStatement}
+      onCancel={handleCancel}
+      onStartOver={handleStartOver}
+      onComplete={handleComplete}
+    >
       <SpaceBetween direction='vertical' size='l'>
-        {composerMode !== 'EditorOnly' && <Header
+        {composerMode === 'ThreatsOnly' && <Header
           composerMode={composerMode}
           statement={editingStatement}
           saveButtonText={saveButtonText}
@@ -375,13 +422,13 @@ const ThreatStatementEditorInner: FC<{ editingStatement: TemplateThreatStatement
         onConfirm={handleCustomTemplateConfirm}
         defaultTemplate={defaultThreatStatementFormat.template}
       />}
-    </>);
+    </ContentLayout>);
 };
 
-const ThreatStatementEditor: FC = () => {
+const ThreatStatementEditor: FC<ThreatStatementEditorProps> = (props) => {
   const { editingStatement } = useThreatsContext();
 
-  return editingStatement ? <ThreatStatementEditorInner editingStatement={editingStatement} /> : null;
+  return editingStatement ? <ThreatStatementEditorInner editingStatement={editingStatement} {...props} /> : null;
 };
 
 export default ThreatStatementEditor;

@@ -17,7 +17,7 @@ import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -44,14 +44,19 @@ import NodeSelector from './Nodes/NodeSelector';
 import ProcessNode from './Nodes/ProcessNode';
 import TrustBoundaryNode from './Nodes/TrustBoundaryNode';
 
-
 import ZIndexChanger from './Nodes/ZIndexChanger';
 import PropertiesPanel from './Properties/PropertiesPanel';
 import SaveButton from './SaveButton/SaveButton';
 
 import ThreatList from './Threats/ThreatList';
 
+
 import { useDiagramContext, useThreatsContext } from '../../../contexts';
+import { ViewNavigationEvent } from '../../../customTypes';
+
+export interface FlowEditorProps {
+  onThreatListView?: ViewNavigationEvent['onThreatListView'];
+}
 
 const edgeTypes = {
   biDirectional: BiDirectionalEdge,
@@ -69,6 +74,8 @@ namespace s {
     height: 450px;
     display: flex;
     border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
 
      svg.react-flow__edges {
       z-index: 1 !important;
@@ -76,7 +83,8 @@ namespace s {
   `;
 }
 
-function Flow() {
+const Flow: FC<FlowEditorProps> = ({ onThreatListView }) => {
+
   const { zoomTo, getZoom, setViewport } = useReactFlow();
 
   // Save and restore state
@@ -290,9 +298,10 @@ function Flow() {
       <ThreatList
         threats={threatList}
         component={selectedComponent}
-        changeHandler={setNodeDataValue} />
+        changeHandler={setNodeDataValue}
+        onThreatListView={onThreatListView} />
     </SpaceBetween>
   );
-}
+};
 
 export default Flow;

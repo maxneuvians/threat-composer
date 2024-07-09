@@ -16,26 +16,22 @@
 import { ThemeProvider, Mode } from '@aws/threat-composer';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import isMemoryRouterUsed from './utils/isMemoryRouterUsed';
 
-const Router = isMemoryRouterUsed() ? MemoryRouter : BrowserRouter;
-
+//For the ide-extension, the theme can be set via meta tag.
 const initialThemeString = (document.querySelector('meta[name="dark-mode"]') as HTMLMetaElement)?.content;
 
-const initialTheme = initialThemeString ?
+let initialTheme = initialThemeString ?
   (initialThemeString === 'true' ? Mode.Dark : Mode.Light) :
   undefined;
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={initialTheme}>
-      <Router>
-        <App />
-      </Router>
+    <ThemeProvider theme={initialTheme} appMode={process.env.REACT_APP_APP_MODE || undefined}>
+      <App />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root'),

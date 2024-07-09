@@ -13,6 +13,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
+/** @jsxImportSource @emotion/react */
+
 import DeleteConfirmationDialog from '@aws-northstar/ui/components/DeleteConfirmationDialog';
 import Alert from '@cloudscape-design/components/alert';
 import Button from '@cloudscape-design/components/button';
@@ -25,6 +27,7 @@ import {
 } from '@cloudscape-design/components/internal/events';
 import Select, { SelectProps } from '@cloudscape-design/components/select';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import { css } from '@emotion/react';
 import { FC, useMemo, useState, useCallback, PropsWithChildren } from 'react';
 import { APP_MODE_IDE_EXTENSION } from '../../../configs';
 import {
@@ -41,9 +44,22 @@ import {
 } from '../../../customTypes';
 import useImportExport from '../../../hooks/useExportImport';
 import useRemoveData from '../../../hooks/useRemoveData';
+import getMobileMediaQuery from '../../../utils/getMobileMediaQuery';
 import isWorkspaceExample from '../../../utils/isWorkspaceExample';
+import ThemeToggle from '../../generic/ThemeToggle';
 import EditWorkspace from '../../workspaces/EditWorkspace';
 import FileImport from '../../workspaces/FileImport';
+
+const styles = {
+  themeToggle: css({
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    [getMobileMediaQuery()]: {
+      display: 'none',
+    },
+  }),
+};
 
 export interface WorkspaceSelectorProps {
   embededMode: boolean;
@@ -57,6 +73,9 @@ export interface WorkspaceSelectorProps {
     eventName?: string;
     onClick?: (data: DataExchangeFormat) => void;
   };
+  onPreview?: (data: DataExchangeFormat) => void;
+  onPreviewClose?: () => void;
+  onImported?: () => void;
 }
 
 const WorkspaceSelector: FC<PropsWithChildren<WorkspaceSelectorProps>> = ({
@@ -68,6 +87,9 @@ const WorkspaceSelector: FC<PropsWithChildren<WorkspaceSelectorProps>> = ({
   filteredThreats,
   singletonMode = false,
   singletonPrimaryActionButtonConfig,
+  onPreview,
+  onPreviewClose,
+  onImported,
 }) => {
   const [addWorkspaceModalVisible, setAddWorkspaceModalVisible] =
     useState(false);
@@ -86,9 +108,6 @@ const WorkspaceSelector: FC<PropsWithChildren<WorkspaceSelectorProps>> = ({
   const {
     appMode,
     composerMode,
-    onPreview,
-    onPreviewClose,
-    onImported,
     fileImportModalVisible,
     setFileImportModalVisible,
   } = useGlobalSetupContext();
@@ -356,6 +375,7 @@ const WorkspaceSelector: FC<PropsWithChildren<WorkspaceSelectorProps>> = ({
             onItemClick={handleMoreActions}
           />
         )}
+        {appMode !== 'ide-extension' && composerMode === 'Full' && <div css={styles.themeToggle}><ThemeToggle /></div>}
       </SpaceBetween>
       {fileImportModalVisible && (
         <FileImport
@@ -376,6 +396,7 @@ const WorkspaceSelector: FC<PropsWithChildren<WorkspaceSelectorProps>> = ({
             await addWorkspace(workspaceName);
           }}
           workspaceList={workspaceList}
+          exampleWorkspaceList={workspaceExamples}
         />
       )}
       {editWorkspaceModalVisible && currentWorkspace && (
@@ -389,6 +410,7 @@ const WorkspaceSelector: FC<PropsWithChildren<WorkspaceSelectorProps>> = ({
           }
           currentWorkspace={currentWorkspace}
           workspaceList={workspaceList}
+          exampleWorkspaceList={workspaceExamples}
         />
       )}
       {removeDataModalVisible && (

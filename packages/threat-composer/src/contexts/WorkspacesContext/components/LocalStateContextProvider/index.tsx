@@ -13,22 +13,27 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
-import { FC, useEffect, useState } from 'react';
-import { DEFAULT_WORKSPACE_ID } from '../../../../configs/constants';
+import { FC, useState } from 'react';
 import { Workspace } from '../../../../customTypes';
+import { useWorkspaceExamplesContext } from '../../../WorkspaceExamplesContext';
 import { WorkspacesContext } from '../../context';
 import { WorkspacesContextProviderProps } from '../../types';
+import useCurrentWorkspace from '../../useCurrentWorkspace';
 import useWorkspaces from '../../useWorkspaces';
 
 const WorkspacesLocalStateContextProvider: FC<WorkspacesContextProviderProps> = ({
   children,
-  workspaceId,
+  workspaceName,
   onWorkspaceChanged,
   ...props
 }) => {
-  const [currentWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
+  const { workspaceExamples } = useWorkspaceExamplesContext();
 
   const [workspaceList, setWorkspaceList] = useState<Workspace[]>([]);
+
+  const [lastWorkspace, setCurrentWorkspace] = useState<Workspace | null>(null);
+
+  const currentWorkspace = useCurrentWorkspace(lastWorkspace, workspaceName, workspaceList, workspaceExamples, onWorkspaceChanged);
 
   const {
     handleSwitchWorkspace,
@@ -36,21 +41,6 @@ const WorkspacesLocalStateContextProvider: FC<WorkspacesContextProviderProps> = 
     handleRemoveWorkspace,
     handleRenameWorkspace,
   } = useWorkspaces(workspaceList, setWorkspaceList, currentWorkspace, setCurrentWorkspace, onWorkspaceChanged);
-
-  useEffect(() => {
-    if (workspaceId) {
-      if (workspaceId === DEFAULT_WORKSPACE_ID && currentWorkspace !== null) {
-        setCurrentWorkspace(null);
-      } else if (workspaceId !== currentWorkspace?.id) {
-        const foundWorkspace = workspaceList.find(x => x.id === workspaceId);
-        if (foundWorkspace) {
-          setCurrentWorkspace(foundWorkspace);
-        } else {
-          setCurrentWorkspace(null);
-        }
-      }
-    }
-  }, [workspaceId, workspaceList, currentWorkspace]);
 
   return (<WorkspacesContext.Provider value={{
     workspaceList,

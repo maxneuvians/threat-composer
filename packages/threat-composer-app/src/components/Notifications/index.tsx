@@ -76,11 +76,16 @@ const Notifications: FC<NotificationsProps> = ({ addPadding }) => {
             ),
           content: (
             <>
-              This GitHub Page is provided for demonstration purposes only. Refer to {' '}
-              <Link color="inverted" href="https://github.com/awslabs/threat-composer" external={true}>
+              This GitHub Page is provided for demonstration purposes only.
+              Refer to{' '}
+              <Link
+                color="inverted"
+                href="https://github.com/awslabs/threat-composer"
+                external={true}
+              >
                 threat-composer GitHub Repo
               </Link>{' '}
-              for self-hosting deployment instructions
+              for self-hosting deployment instructions.
             </>
           ),
           id: 'message_2',

@@ -19,8 +19,9 @@ export interface ViewNavigationEvent {
   onApplicationInfoView?: () => void;
   onArchitectureView?: () => void;
   onDataflowView?: () => void;
+  onDiagramView?: () => void;
   onAssumptionListView?: () => void;
   onMitigationListView?: () => void;
   onThreatListView?: (filter?: ThreatStatementListFilter) => void;
-  onThreatEditorView?: (threatId: string) => void;
+  onThreatEditorView?: (threatId: string, idToCopy?: string) => void;
 }

@@ -16,13 +16,13 @@
 import { FC } from 'react';
 import { ReactFlowProvider } from 'reactflow';
 import Flow from './Flow';
-import { EditableComponentBaseProps } from '../../customTypes';
+import { ViewNavigationEvent } from '../../customTypes';
 
 
-const Diagram: FC<EditableComponentBaseProps> = () => {
+const Diagram: FC<ViewNavigationEvent> = (props) => {
   return (
     <ReactFlowProvider>
-      <Flow />
+      <Flow onThreatListView={props.onThreatListView}/>
     </ReactFlowProvider>
   );
 };

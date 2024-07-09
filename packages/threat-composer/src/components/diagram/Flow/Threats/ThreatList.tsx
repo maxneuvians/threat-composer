@@ -26,9 +26,8 @@ import {
 } from '@cloudscape-design/components';
 import { memo, useState, useEffect } from 'react';
 import { columnDefinitions, getMatchesCountText, paginationLabels, collectionPreferencesProps, filteringConstants, filteringProperties } from './table-config';
-import { useThreatsContext } from '../../../../contexts/ThreatsContext';
 
-function EmptyState({ title, subtitle, action }: {title: string; subtitle: string; action: any}) {
+function EmptyState({ title, subtitle, action }: { title: string; subtitle: string; action: any }) {
   return (
     <Box textAlign="center" color="inherit">
       <Box variant="strong" textAlign="center" color="inherit">
@@ -42,7 +41,12 @@ function EmptyState({ title, subtitle, action }: {title: string; subtitle: strin
   );
 }
 
-export default memo(({ threats, component, changeHandler }: { threats: any; component: any; changeHandler: any } ) => {
+export default memo(({ threats, component, changeHandler, onThreatListView }: {
+  threats: any;
+  component: any;
+  changeHandler: any;
+  onThreatListView: any;
+}) => {
 
   const [data, setData] = useState((component && component.data) || {});
 
@@ -57,7 +61,6 @@ export default memo(({ threats, component, changeHandler }: { threats: any; comp
     }
   };
 
-  const { onThreatListView } = useThreatsContext();
 
   const [preferences, setPreferences] = useState<CollectionPreferencesProps.Preferences>({
     pageSize: 10,
@@ -97,7 +100,7 @@ export default memo(({ threats, component, changeHandler }: { threats: any; comp
             subtitle=""
             action={
               <Button onClick={() => actions.setFiltering('')}>
-              Clear filter
+                Clear filter
               </Button>
             }
           />

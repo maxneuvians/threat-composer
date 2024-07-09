@@ -57,7 +57,7 @@ const useRemoveData = () => {
     return removeAllStatements();
   }, [composerMode,
     removeApplicationInfo, removeArchitectureInfo, removeDataflowInfo,
-    removeDiagram, removeAllAssumptions, removeAllMitigations,
+    removeAllAssumptions, removeAllMitigations,
     removeAllStatements, removeAllAssumptionLinks,
     removeAllMitigationLinks]);
 

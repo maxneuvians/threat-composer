@@ -13,13 +13,16 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  ******************************************************************************************************************** */
-import useHasContent from '../../../hooks/useHasContent';
-import LandingPage from '../LandingPage';
-import WorkspaceInsight from '../WorkspaceInsights';
+import { FC } from 'react';
+import useImportExport from '../../../hooks/useExportImport';
+import hasContent from '../../../utils/hasContent';
+import LandingPage, { LandingPageProps } from '../LandingPage';
+import WorkspaceInsight, { WorkspaceInsightsProps } from '../WorkspaceInsights';
 
-const WorkspaceHome = () => {
-  const [hasContent] = useHasContent();
-  return hasContent ? <WorkspaceInsight /> : <LandingPage />;
+const WorkspaceHome: FC<WorkspaceInsightsProps & LandingPageProps> = (props) => {
+  const { getWorkspaceData } = useImportExport();
+  const [hasContentSum] = hasContent(getWorkspaceData());
+  return hasContentSum ? <WorkspaceInsight {...props} /> : <LandingPage {...props} />;
 };
 
 export default WorkspaceHome;

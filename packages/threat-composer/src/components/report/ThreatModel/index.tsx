@@ -17,12 +17,13 @@ import { FC, useMemo } from 'react';
 import ThreatModelView, { ThreatModelViewProps } from './components/ThreatModelView';
 import { APP_MODE_IDE_EXTENSION } from '../../../configs/appMode';
 import { useGlobalSetupContext, useWorkspacesContext } from '../../../contexts';
+import { DataExchangeFormat, ViewNavigationEvent } from '../../../customTypes';
 import useImportExport from '../../../hooks/useExportImport';
-import useHasContent from '../../../hooks/useHasContent';
 import getExportFileName from '../../../utils/getExportFileName';
+import hasContent from '../../../utils/hasContent';
 
-export interface ThreatModelProps {
-  onPrintButtonClick?: () => void;
+export interface ThreatModelProps extends ViewNavigationEvent {
+  onPrintButtonClick?: (data: DataExchangeFormat) => void;
   isPreview?: boolean;
   convertToDocx?: ThreatModelViewProps['convertToDocx'];
 }
@@ -33,36 +34,34 @@ const ThreatModel: FC<ThreatModelProps> = ({
 }) => {
   const { getWorkspaceData } = useImportExport();
   const { composerMode, appMode } = useGlobalSetupContext();
-  const [_, hasContentDetails] = useHasContent();
   const { currentWorkspace } = useWorkspacesContext();
 
   const downloadFileName = useMemo(() => {
     return getExportFileName(composerMode, false, currentWorkspace);
   }, [composerMode, currentWorkspace]);
 
-  const {
-    onApplicationInfoView,
-    onArchitectureView,
-    onDataflowView,
-    onAssumptionListView,
-    onThreatListView,
-    onMitigationListView,
-  } = useWorkspacesContext();
-  return <ThreatModelView
-    {...props}
-    onPrintButtonClick={onPrintButtonClick}
-    showPrintDownloadButtons={appMode !== APP_MODE_IDE_EXTENSION}
-    composerMode={composerMode}
-    data={getWorkspaceData()}
-    downloadFileName={downloadFileName}
-    hasContentDetails={hasContentDetails}
-    onApplicationInfoView={onApplicationInfoView}
-    onArchitectureView={onArchitectureView}
-    onDataflowView={onDataflowView}
-    onAssumptionListView={onAssumptionListView}
-    onThreatListView={onThreatListView}
-    onMitigationListView={onMitigationListView}
-  />;
+  const hasContentDetails = useMemo(() => {
+    const [, details] = hasContent(getWorkspaceData());
+    return details;
+  }, [getWorkspaceData]);
+
+  return (
+    <ThreatModelView
+      {...props}
+      onPrintButtonClick={() => onPrintButtonClick?.(getWorkspaceData())}
+      showPrintDownloadButtons={appMode !== APP_MODE_IDE_EXTENSION}
+      composerMode={composerMode}
+      data={getWorkspaceData()}
+      downloadFileName={downloadFileName}
+      hasContentDetails={hasContentDetails}
+      onApplicationInfoView={props.onApplicationInfoView}
+      onArchitectureView={props.onArchitectureView}
+      onDataflowView={props.onDataflowView}
+      onDiagramView={props.onDiagramView}
+      onAssumptionListView={props.onAssumptionListView}
+      onThreatListView={props.onThreatListView}
+      onMitigationListView={props.onMitigationListView}
+    />);
 };
 
 export default ThreatModel;

@@ -17,9 +17,9 @@ import { stringify } from 'yaml';
 import { DataExchangeFormat } from '../../customTypes';
 
 /**
-   * Convert the threat model into Yaml format
-   * @param data
-   */
+ * Convert the threat model into Yaml format
+ * @param data
+ */
 const convertToYaml = (data: DataExchangeFormat) => {
   return stringify(data);
 };
