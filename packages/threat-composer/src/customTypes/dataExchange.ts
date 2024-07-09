@@ -58,6 +58,7 @@ export interface HasContentDetails {
   applicationInfo: boolean;
   architecture: boolean;
   dataflow: boolean;
+  diagram: boolean;
   assumptions: boolean;
   mitigations: boolean;
   threats: boolean;

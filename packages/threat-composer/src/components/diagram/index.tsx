@@ -18,11 +18,15 @@ import { ReactFlowProvider } from 'reactflow';
 import Flow from './Flow';
 import { ViewNavigationEvent } from '../../customTypes';
 
+export interface DiagramProps {
+  appMode?: string;
+  onThreatListView?: ViewNavigationEvent['onThreatListView'];
+}
 
-const Diagram: FC<ViewNavigationEvent> = (props) => {
+const Diagram: FC<DiagramProps> = (props) => {
   return (
     <ReactFlowProvider>
-      <Flow onThreatListView={props.onThreatListView}/>
+      <Flow appMode={props.appMode} onThreatListView={props.onThreatListView}/>
     </ReactFlowProvider>
   );
 };

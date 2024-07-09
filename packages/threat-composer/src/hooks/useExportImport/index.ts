@@ -20,6 +20,7 @@ import { useArchitectureInfoContext } from '../../contexts/ArchitectureContext/c
 import { useAssumptionLinksContext } from '../../contexts/AssumptionLinksContext/context';
 import { useAssumptionsContext } from '../../contexts/AssumptionsContext/context';
 import { useDataflowInfoContext } from '../../contexts/DataflowContext/context';
+import { useDiagramContext } from '../../contexts/DiagramContext/context';
 import { useGlobalSetupContext } from '../../contexts/GlobalSetupContext/context';
 import { useMitigationLinksContext } from '../../contexts/MitigationLinksContext/context';
 import { useMitigationsContext } from '../../contexts/MitigationsContext/context';
@@ -49,6 +50,7 @@ const useImportExport = () => {
   const { applicationInfo, setApplicationInfo } = useApplicationInfoContext();
   const { architectureInfo, setArchitectureInfo } = useArchitectureInfoContext();
   const { dataflowInfo, setDataflowInfo } = useDataflowInfoContext();
+  const { diagram, setDiagram } = useDiagramContext();
   const { assumptionList, setAssumptionList } = useAssumptionsContext();
   const { mitigationList, setMitigationList } = useMitigationsContext();
   const { statementList, setStatementList } = useThreatsContext();
@@ -64,6 +66,7 @@ const useImportExport = () => {
         applicationInfo,
         architecture: architectureInfo,
         dataflow: dataflowInfo,
+        diagram: diagram,
         assumptions: assumptionList,
         mitigations: mitigationList,
         assumptionLinks: assumptionLinkList,
@@ -78,6 +81,7 @@ const useImportExport = () => {
     };
   }, [composerMode, currentWorkspace, applicationInfo,
     architectureInfo, dataflowInfo,
+    diagram,
     assumptionList, mitigationList,
     assumptionLinkList, mitigationLinkList,
     statementList]);
@@ -130,6 +134,7 @@ const useImportExport = () => {
       setApplicationInfo(data.applicationInfo || {});
       setArchitectureInfo(data.architecture || {});
       setDataflowInfo(data.dataflow || {});
+      setDiagram(data.diagram || { content: '' });
       setAssumptionList(data.assumptions || []);
       setMitigationList(data.mitigations || []);
       setStatementList(calculatedThreats);
@@ -143,6 +148,7 @@ const useImportExport = () => {
     setApplicationInfo,
     setArchitectureInfo,
     setDataflowInfo,
+    setDiagram,
     setAssumptionList,
     setMitigationList,
     setStatementList,

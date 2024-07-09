@@ -55,6 +55,7 @@ import { useDiagramContext, useThreatsContext } from '../../../contexts';
 import { ViewNavigationEvent } from '../../../customTypes';
 
 export interface FlowEditorProps {
+  appMode?: string;
   onThreatListView?: ViewNavigationEvent['onThreatListView'];
 }
 

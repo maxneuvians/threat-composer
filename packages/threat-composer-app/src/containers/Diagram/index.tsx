@@ -6,7 +6,10 @@ import useNavigateView from '../../hooks/useNavigationView';
 
 const Diagram = () => {
   const handleNavigationView = useNavigateView();
-  return <DiagramComponent onThreatListView={() => handleNavigationView(ROUTE_THREAT_LIST)}/>;
+  return <DiagramComponent
+    appMode={process.env.REACT_APP_APP_MODE || undefined}
+    onThreatListView={() => handleNavigationView(ROUTE_THREAT_LIST)}
+  />;
 };
 
 export default Diagram;
